@@ -59,6 +59,16 @@ Route::get('equipment/create')->name('equipment.create')->uses('EquipmentControl
 //Route::delete('organizations/{organization}')->name('organizations.destroy')->uses('OrganizationsController@destroy')->middleware('auth');
 //Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
 
+
+// Categories
+Route::get('categories')->name('categories')->uses('CategoryController@index')->middleware('remember', 'auth');
+Route::get('categories/create')->name('categories.create')->uses('CategoryController@create')->middleware('auth');
+Route::post('categories')->name('categories.store')->uses('CategoryController@store')->middleware('auth');
+Route::get('categories/{category}/edit')->name('categories.edit')->uses('CategoryController@edit')->middleware('auth');
+Route::put('categories/{category}')->name('categories.update')->uses('CategoryController@update')->middleware('auth');
+Route::delete('categories/{category}')->name('categories.destroy')->uses('CategoryController@destroy')->middleware('auth');
+
+
 // Reports
 Route::get('reports')->name('reports')->uses('ReportsController')->middleware('auth');
 

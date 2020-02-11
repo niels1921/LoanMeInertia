@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Organization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -24,7 +25,9 @@ class EquipmentController extends Controller
 
     public function create()
     {
-        return Inertia::render('Equipment/Create');
+        return Inertia::render('Equipment/Create',[
+            'categories' => Category::all()->toArray()
+        ]);
     }
 
     public function store()
