@@ -49,6 +49,16 @@ Route::put('contacts/{contact}')->name('contacts.update')->uses('ContactsControl
 Route::delete('contacts/{contact}')->name('contacts.destroy')->uses('ContactsController@destroy')->middleware('auth');
 Route::put('contacts/{contact}/restore')->name('contacts.restore')->uses('ContactsController@restore')->middleware('auth');
 
+
+// Equipment
+Route::get('equipment')->name('equipment')->uses('EquipmentController@index')->middleware('remember', 'auth');
+Route::get('equipment/create')->name('equipment.create')->uses('EquipmentController@create')->middleware('auth');
+//Route::post('organizations')->name('organizations.store')->uses('OrganizationsController@store')->middleware('auth');
+//Route::get('organizations/{organization}/edit')->name('organizations.edit')->uses('OrganizationsController@edit')->middleware('auth');
+//Route::put('organizations/{organization}')->name('organizations.update')->uses('OrganizationsController@update')->middleware('auth');
+//Route::delete('organizations/{organization}')->name('organizations.destroy')->uses('OrganizationsController@destroy')->middleware('auth');
+//Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
+
 // Reports
 Route::get('reports')->name('reports')->uses('ReportsController')->middleware('auth');
 
