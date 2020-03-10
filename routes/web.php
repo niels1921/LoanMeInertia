@@ -53,12 +53,11 @@ Route::put('contacts/{contact}/restore')->name('contacts.restore')->uses('Contac
 // Equipment
 Route::get('equipment')->name('equipment')->uses('EquipmentController@index')->middleware('remember', 'auth');
 Route::get('equipment/create')->name('equipment.create')->uses('EquipmentController@create')->middleware('auth');
-//Route::post('organizations')->name('organizations.store')->uses('OrganizationsController@store')->middleware('auth');
-//Route::get('organizations/{organization}/edit')->name('organizations.edit')->uses('OrganizationsController@edit')->middleware('auth');
-//Route::put('organizations/{organization}')->name('organizations.update')->uses('OrganizationsController@update')->middleware('auth');
+Route::post('equipment')->name('equipment.store')->uses('EquipmentController@store')->middleware('auth');
+Route::get('equipment/{equipment}/edit')->name('equipment.edit')->uses('EquipmentController@edit')->middleware('auth');
+Route::put('equipment/{equipment}')->name('equipment.update')->uses('EquipmentController@update')->middleware('auth');
 //Route::delete('organizations/{organization}')->name('organizations.destroy')->uses('OrganizationsController@destroy')->middleware('auth');
 //Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
-
 
 // Categories
 Route::get('categories')->name('categories')->uses('CategoryController@index')->middleware('remember', 'auth');

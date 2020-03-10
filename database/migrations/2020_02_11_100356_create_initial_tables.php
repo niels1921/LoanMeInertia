@@ -46,7 +46,6 @@ class CreateInitialTables extends Migration
             $table->date('from');
             $table->date('till');
             $table->timestamps();
-
             $table->foreign('equipment_id')->references('id')->on('equipment');
             $table->foreign('user_id')->references('id')->on('users');
         });

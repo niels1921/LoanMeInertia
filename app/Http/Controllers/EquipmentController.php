@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Organization;
+use App\Equipment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -26,76 +25,69 @@ class EquipmentController extends Controller
     public function create()
     {
         return Inertia::render('Equipment/Create',[
-            'categories' => Category::all()->toArray()
-        ]);
-    }
+            // 'categories' => Category::all()->toArray()
+        ]);    }
 
     public function store()
     {
-        Auth::user()->account->organizations()->create(
+        Auth::user()->account->equipment()->create(
             Request::validate([
                 'name' => ['required', 'max:100'],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
+                'description' => [],
+                'category' => ['required'],
+                'address' => ['required', 'max:150'],
+                'postal_code' => ['required', 'max:25'],
+                'city' => ['required', 'max:50'],
+                'country' => ['required', 'max:60'],
             ])
         );
 
-        return Redirect::route('organizations')->with('success', 'Organization created.');
+        return Redirect::route('equipment')->with('success', 'Equipment created.');
     }
 
-    public function edit(Organization $organization)
+    public function edit(Equipment $equipment)
     {
-        return Inertia::render('Organizations/Edit', [
-            'organization' => [
-                'id' => $organization->id,
-                'name' => $organization->name,
-                'email' => $organization->email,
-                'phone' => $organization->phone,
-                'address' => $organization->address,
-                'city' => $organization->city,
-                'region' => $organization->region,
-                'country' => $organization->country,
-                'postal_code' => $organization->postal_code,
-                'deleted_at' => $organization->deleted_at,
-                'contacts' => $organization->contacts()->orderByName()->get()->map->only('id', 'name', 'city', 'phone'),
+        return Inertia::render('Equipment/Edit', [
+            'equipment' => [
+                'id' => $equipment->id,
+                'name' => $equipment->name,
+                'category' => $equipment->phone,
+                'address' => $equipment->address,
+                'postal_code' => $equipment->postal_code,
+                'city' => $equipment->city,
+                'country' => $equipment->country,
             ],
         ]);
     }
 
-    public function update(Organization $organization)
+    public function update(Equipment $equipment)
     {
-        $organization->update(
+        $equipment->update(
             Request::validate([
                 'name' => ['required', 'max:100'],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
+                'description' => [],
+                'category' => ['required'],
+                'address' => ['required', 'max:150'],
+                'postal_code' => ['required', 'max:25'],
+                'city' => ['required', 'max:50'],
+                'country' => ['required', 'max:60'],
             ])
         );
 
-        return Redirect::back()->with('success', 'Organization updated.');
+        return Redirect::back()->with('success', 'Equipment updated.');
     }
 
-    public function destroy(Organization $organization)
+    public function destroy(Equipment $equipment)
     {
-        $organization->delete();
+        $equipment->delete();
 
-        return Redirect::back()->with('success', 'Organization deleted.');
+        return Redirect::back()->with('success', 'Equipment deleted.');
     }
 
-    public function restore(Organization $organization)
+    public function restore(Equipment $equipment)
     {
-        $organization->restore();
+        $equipment->restore();
 
-        return Redirect::back()->with('success', 'Organization restored.');
+        return Redirect::back()->with('success', 'Equipment restored.');
     }
 }
