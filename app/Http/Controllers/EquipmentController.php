@@ -81,13 +81,6 @@ class EquipmentController extends Controller
     {
         $equipment->delete();
 
-        return Redirect::back()->with('success', 'Equipment deleted.');
-    }
-
-    public function restore(Equipment $equipment)
-    {
-        $equipment->restore();
-
-        return Redirect::back()->with('success', 'Equipment restored.');
+        return Redirect::route('equipment')->with('success', 'Equipment deleted.');
     }
 }

@@ -23,6 +23,7 @@
                     <text-input v-model="form.country" :errors="$page.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" label="Country" />
                 </div>
                 <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex items-center">
+                    <button v-if="!equipment.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete equipment</button>
                     <loading-button :loading="sending" class="btn-indigo ml-auto" type="submit">Update equipment</loading-button>
                 </div>
             </form>
@@ -77,13 +78,8 @@
                     .then(() => this.sending = false)
             },
             destroy() {
-                if (confirm('Are you sure you want to delete this organization?')) {
-                    this.$inertia.delete(this.route('organizations.destroy', this.organization.id))
-                }
-            },
-            restore() {
-                if (confirm('Are you sure you want to restore this organization?')) {
-                    this.$inertia.put(this.route('organizations.restore', this.organization.id))
+                if (confirm('Are you sure you want to delete this equipment?')) {
+                    this.$inertia.delete(this.route('equipment.destroy', this.equipment.id))
                 }
             },
         },

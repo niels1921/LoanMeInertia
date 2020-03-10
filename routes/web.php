@@ -56,7 +56,7 @@ Route::get('equipment/create')->name('equipment.create')->uses('EquipmentControl
 Route::post('equipment')->name('equipment.store')->uses('EquipmentController@store')->middleware('auth');
 Route::get('equipment/{equipment}/edit')->name('equipment.edit')->uses('EquipmentController@edit')->middleware('auth');
 Route::put('equipment/{equipment}')->name('equipment.update')->uses('EquipmentController@update')->middleware('auth');
-//Route::delete('organizations/{organization}')->name('organizations.destroy')->uses('OrganizationsController@destroy')->middleware('auth');
+Route::delete('equipment/{equipment}')->name('equipment.destroy')->uses('EquipmentController@destroy')->middleware('auth');
 //Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
 
 // Categories
