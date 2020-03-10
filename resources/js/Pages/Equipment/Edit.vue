@@ -13,9 +13,8 @@
                 <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
                     <text-input v-model="form.name" :errors="$page.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" label="Name" />
                     <textarea-input v-model="form.description" :errors="$page.errors.description" class="pr-6 pb-8 w-full lg:w-1/2" label="Description" />
-                    <select-input v-model="form.category" :errors="$page.errors.category" class="pr-6 pb-8 w-full lg:w-1/2" label="Category">
-                        <option value="1">Ski</option>
-                        <option value="2">Snowboard</option>
+                    <select-input v-model="form.category_id" :errors="$page.errors.category" class="pr-6 pb-8 w-full lg:w-1/2" label="Category">
+                        <option v-for='category in categories' :value='category.id'>{{ category.name }}</option>
                     </select-input>
                     <text-input v-model="form.address" :errors="$page.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" label="Address" />
                     <text-input v-model="form.postal_code" :errors="$page.errors.postal_code" class="pr-6 pb-8 w-full lg:w-1/2" label="Postal code" />
@@ -23,6 +22,7 @@
                     <text-input v-model="form.country" :errors="$page.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" label="Country" />
                 </div>
                 <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex items-center">
+                    <button v-if="!equipment.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete equipment</button>
                     <loading-button :loading="sending" class="btn-indigo ml-auto" type="submit">Update equipment</loading-button>
                 </div>
             </form>
@@ -55,6 +55,7 @@
         },
         props: {
             equipment: Object,
+            categories: [],
         },
         remember: 'form',
         data() {
@@ -62,7 +63,7 @@
                 sending: false,
                 form: {
                     name: this.equipment.name,
-                    category: this.equipment.category,
+                    category_id: this.equipment.category_id,
                     address: this.equipment.address,
                     city: this.equipment.city,
                     country: this.equipment.country,
@@ -77,13 +78,8 @@
                     .then(() => this.sending = false)
             },
             destroy() {
-                if (confirm('Are you sure you want to delete this organization?')) {
-                    this.$inertia.delete(this.route('organizations.destroy', this.organization.id))
-                }
-            },
-            restore() {
-                if (confirm('Are you sure you want to restore this organization?')) {
-                    this.$inertia.put(this.route('organizations.restore', this.organization.id))
+                if (confirm('Are you sure you want to delete this equipment?')) {
+                    this.$inertia.delete(this.route('equipment.destroy', this.equipment.id))
                 }
             },
         },
