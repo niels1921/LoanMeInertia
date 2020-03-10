@@ -14,7 +14,8 @@ class Equipment extends Model
         'address',
         'postal_code',
         'city',
-        'country'
+        'country',
+        'category_id',
     ];
 
     public function user()

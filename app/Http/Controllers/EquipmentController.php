@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Equipment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -25,7 +26,7 @@ class EquipmentController extends Controller
     public function create()
     {
         return Inertia::render('Equipment/Create',[
-            // 'categories' => Category::all()->toArray()
+            'categories' => Category::all()->toArray()
         ]);    }
 
     public function store()
@@ -48,16 +49,19 @@ class EquipmentController extends Controller
     public function edit(Equipment $equipment)
     {
         return Inertia::render('Equipment/Edit', [
+            'categories' => Category::all()->toArray(),
             'equipment' => [
                 'id' => $equipment->id,
                 'name' => $equipment->name,
-                'category' => $equipment->phone,
+                'category' => $equipment->category,
                 'address' => $equipment->address,
                 'postal_code' => $equipment->postal_code,
                 'city' => $equipment->city,
                 'country' => $equipment->country,
             ],
         ]);
+
+
     }
 
     public function update(Equipment $equipment)
@@ -66,7 +70,7 @@ class EquipmentController extends Controller
             Request::validate([
                 'name' => ['required', 'max:100'],
                 'description' => [],
-                'category' => ['required'],
+                'category_id' => ['required'],
                 'address' => ['required', 'max:150'],
                 'postal_code' => ['required', 'max:25'],
                 'city' => ['required', 'max:50'],
@@ -74,13 +78,12 @@ class EquipmentController extends Controller
             ])
         );
 
-        return Redirect::back()->with('success', 'Equipment updated.');
+        return Redirect::route('equipment')->with('success', 'Equipment updated.');
     }
 
     public function destroy(Equipment $equipment)
     {
         $equipment->delete();
-
         return Redirect::route('equipment')->with('success', 'Equipment deleted.');
     }
 }

@@ -59,6 +59,7 @@ Route::put('equipment/{equipment}')->name('equipment.update')->uses('EquipmentCo
 Route::delete('equipment/{equipment}')->name('equipment.destroy')->uses('EquipmentController@destroy')->middleware('auth');
 //Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
 
+
 // Categories
 Route::get('categories')->name('categories')->uses('CategoryController@index')->middleware('remember', 'auth');
 Route::get('categories/create')->name('categories.create')->uses('CategoryController@create')->middleware('auth');
