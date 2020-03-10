@@ -600,6 +600,10 @@ input:focus, input:active, select:focus, select:active, textarea:focus, textarea
   outline: none;
 }
 
+.map{
+  min-height: 100vh !important;
+}
+
 /* Components */
 
 .container {
