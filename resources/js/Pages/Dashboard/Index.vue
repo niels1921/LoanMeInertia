@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Map></Map>
+    <Map :equipment="equipment" />
   </div>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   layout: Layout,
   components: {
     Map,
+  },
+  props: {
+    equipment: Array,
   },
 }
 </script>

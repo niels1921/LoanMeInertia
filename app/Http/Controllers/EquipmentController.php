@@ -23,6 +23,16 @@ class EquipmentController extends Controller
         ]);
     }
 
+    public function userEquipment(){
+        return Inertia::render('Equipment/Index', [
+            'filters' => \Illuminate\Support\Facades\Request::all('search', 'trashed'),
+            'equipment' => Equipment::query()
+                ->orderBy('name')
+                ->paginate()
+                ->only('id', 'name', 'address', 'postal_code', 'city','country'),
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('Equipment/Create',[
