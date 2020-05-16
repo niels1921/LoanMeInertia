@@ -31,7 +31,6 @@ class CreateInitialTables extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('account_id')->nullable();
             $table->timestamps();
-
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('account_id')->references('id')->on('accounts');
 

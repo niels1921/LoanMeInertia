@@ -41,11 +41,15 @@ class EquipmentController extends Controller
 
     public function store()
     {
-        Auth::user()->account->equipment()->create(
+//        $files = Request::all()['files'];
+//
+//        dd($files);
+
+        $equipment = Auth::user()->account->equipment()->create(
             Request::validate([
                 'name' => ['required', 'max:100'],
                 'description' => [],
-                'category' => ['required'],
+//                'category' => ['required'],
                 'address' => ['required', 'max:150'],
                 'postal_code' => ['required', 'max:25'],
                 'city' => ['required', 'max:50'],
@@ -53,11 +57,20 @@ class EquipmentController extends Controller
             ])
         );
 
+        if(Request::has('files')){
+            $files = Request::all()['files'];
+            foreach ($files as $file){
+                $equipment->addMedia($file);
+            }
+        }
+
+
         return Redirect::route('equipment')->with('success', 'Equipment created.');
     }
 
     public function edit(Equipment $equipment)
     {
+        dd($equipment->getMedia());
         return Inertia::render('Equipment/Edit', [
             'categories' => Category::all()->toArray(),
             'equipment' => [
@@ -70,8 +83,6 @@ class EquipmentController extends Controller
                 'country' => $equipment->country,
             ],
         ]);
-
-
     }
 
     public function update(Equipment $equipment)
