@@ -15415,6 +15415,27 @@ input:focus, input:active, select:focus, select:active, textarea:focus, textarea
           transition-duration: 1000ms;
 }
 
+.title-login{
+  font-size: 30px;
+  text-align: center;
+}
+
+.login-page{
+  background-color: #52aa8ad6;
+}
+
+.button-green{
+  background-color: #136F63;
+}
+
+.light-green{
+  background-color: #52aa8ad6;
+}
+
+.main-menu-color{
+  color: #136F63;
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;

@@ -1,7 +1,7 @@
 <template>
-  <div class="p-6 bg-indigo-800 min-h-screen flex justify-center items-center">
+  <div class="login-page p-6 min-h-screen flex justify-center items-center">
     <div class="w-full max-w-md">
-      <logo class="block mx-auto w-full max-w-xs fill-white" height="50" />
+      <h1 class="title-login">LoanMe</h1>
       <form class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden" @submit.prevent="submit">
         <div class="px-10 py-12">
           <h1 class="text-center font-bold text-3xl">Welcome Back!</h1>
@@ -15,7 +15,7 @@
         </div>
         <div class="px-10 py-4 bg-gray-100 border-t border-gray-200 flex justify-between items-center">
           <a class="hover:underline" tabindex="-1" href="#reset-password">Forget password?</a>
-          <loading-button :loading="sending" class="btn-indigo" type="submit">Login</loading-button>
+          <loading-button :loading="sending" class="button-green btn-indigo" type="submit">Login</loading-button>
         </div>
       </form>
     </div>

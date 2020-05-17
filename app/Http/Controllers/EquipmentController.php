@@ -15,12 +15,12 @@ class EquipmentController extends Controller
     public function index()
     {
         return Inertia::render('Equipment/Index', [
-            'filters' => \Illuminate\Support\Facades\Request::all('search', 'trashed'),
-            'equipment' => Auth::user()->account->equipment()
-                ->orderBy('name')
-                ->paginate()
-                ->only('id', 'name', 'address', 'postal_code', 'city','country'),
-        ]);
+        'filters' => \Illuminate\Support\Facades\Request::all('search', 'trashed'),
+        'equipment' => Auth::user()->account->equipment()
+            ->orderBy('name')
+            ->paginate()
+            ->only('id', 'name', 'address', 'postal_code', 'city','country'),
+    ]);
     }
 
     public function create()
@@ -35,7 +35,7 @@ class EquipmentController extends Controller
             Request::validate([
                 'name' => ['required', 'max:100'],
                 'description' => [],
-                'category' => ['required'],
+                'category_id' => ['required'],
                 'address' => ['required', 'max:150'],
                 'postal_code' => ['required', 'max:25'],
                 'city' => ['required', 'max:50'],
@@ -53,15 +53,14 @@ class EquipmentController extends Controller
             'equipment' => [
                 'id' => $equipment->id,
                 'name' => $equipment->name,
-                'category' => $equipment->category,
+                'description' => $equipment->description,
+                'category_id' => $equipment->category_id,
                 'address' => $equipment->address,
                 'postal_code' => $equipment->postal_code,
                 'city' => $equipment->city,
                 'country' => $equipment->country,
             ],
         ]);
-
-
     }
 
     public function update(Equipment $equipment)

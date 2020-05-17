@@ -38,17 +38,6 @@ class CreateInitialTables extends Migration
         });
 
 
-
-        Schema::create('loaned_equipment', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('equipment_id');
-            $table->date('from');
-            $table->date('till');
-            $table->timestamps();
-            $table->foreign('equipment_id')->references('id')->on('equipment');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
     }
 
     /**

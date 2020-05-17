@@ -51,7 +51,6 @@
             SelectInput,
             TextInput,
             TrashedMessage,
-
         },
         props: {
             equipment: Object,
@@ -64,6 +63,7 @@
                 form: {
                     name: this.equipment.name,
                     category_id: this.equipment.category_id,
+                    description: this.equipment.description,
                     address: this.equipment.address,
                     city: this.equipment.city,
                     country: this.equipment.country,
