@@ -27,3 +27,7 @@ Homestead.json
 !.eslintrc.json
 
 public/mix-manifest.json
+
+public/js/
+
+public/
