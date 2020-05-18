@@ -28,6 +28,8 @@ Homestead.json
 
 public/mix-manifest.json
 
-public/js/
+public/js
 
-public/
+public/css
+public/images
+public/uploads

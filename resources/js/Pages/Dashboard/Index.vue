@@ -1,5 +1,7 @@
 <template>
   <div>
+    <modal name="reservation" />
+    <button @click="show">Open modal</button>
     <h1 class="mb-8 font-bold text-3xl">Equipment</h1>
     <div class="mb-6 flex justify-between items-center">
       <search-filter v-model="form.search" class="w-full max-w-md mr-4" @reset="reset">
@@ -45,7 +47,6 @@
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
             </inertia-link>
           </td>
-
         </tr>
         <tr v-if="equipment.data.length === 0">
           <td class="border-t px-6 py-4" colspan="4">No equipment found.</td>
@@ -54,50 +55,54 @@
     </div>
     <pagination :links="equipment .links" />
   </div>
+  </model>
 </template>
 
 <script>
-  import Icon from '@/Shared/Icon'
-  import Layout from '@/Shared/Layout'
-  import mapValues from 'lodash/mapValues'
-  import Pagination from '@/Shared/Pagination'
-  import pickBy from 'lodash/pickBy'
-  import SearchFilter from '@/Shared/SearchFilter'
-  import throttle from 'lodash/throttle'
+import Icon from '@/Shared/Icon'
+import Layout from '@/Shared/Layout'
+import mapValues from 'lodash/mapValues'
+import Pagination from '@/Shared/Pagination'
+import pickBy from 'lodash/pickBy'
+import SearchFilter from '@/Shared/SearchFilter'
+import throttle from 'lodash/throttle'
 
-  export default {
-    metaInfo: { title: 'equipment' },
-    layout: Layout,
-    components: {
-      Icon,
-      Pagination,
-      SearchFilter,
-    },
-    props: {
-      equipment: Object,
-      filters: Object,
-    },
-    data() {
-      return {
-        form: {
-          search: this.filters.search,
-          trashed: this.filters.trashed,
-        },
-      }
-    },
-    watch: {
+export default {
+  metaInfo: { title: 'equipment' },
+  layout: Layout,
+  components: {
+    Icon,
+    Pagination,
+    SearchFilter,
+  },
+  props: {
+    equipment: Object,
+    filters: Object,
+  },
+  data() {
+    return {
       form: {
-        handler: throttle(function() {
-          let query = pickBy(this.form)
-          this.$inertia.replace(this.route('equipment', Object.keys(query).length ? query : { remember: 'forget' }))
-        }, 150),
-        deep: true,
+        search: this.filters.search,
+        trashed: this.filters.trashed,
       },
+    }
+  },
+  watch: {
+    form: {
+      handler: throttle(function() {
+        let query = pickBy(this.form)
+        this.$inertia.replace(this.route('equipment', Object.keys(query).length ? query : { remember: 'forget' }))
+      }, 150),
+      deep: true,
     },
-    methods: {
-      reset() {
-        this.form = mapValues(this.form, () => null)
-      },
+  },
+  methods: {
+    show () {
+      this.$modal.show('hello-world')
     },
-  }
+    reset() {
+      this.form = mapValues(this.form, () => null)
+    },
+  },
+}
 </script>
