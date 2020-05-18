@@ -2,12 +2,16 @@ import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import PortalVue from 'portal-vue'
 import { InertiaApp } from '@inertiajs/inertia-vue'
+import VueMapbox from "vue-mapbox";
+import Mapbox from "mapbox-gl";
+
 
 Vue.config.productionTip = false
 Vue.mixin({ methods: { route: window.route } })
 Vue.use(InertiaApp)
 Vue.use(PortalVue)
 Vue.use(VueMeta)
+Vue.use(VueMapbox, { mapboxgl: Mapbox });
 
 let app = document.getElementById('app')
 

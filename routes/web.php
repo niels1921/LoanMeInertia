@@ -56,6 +56,7 @@ Route::put('contacts/{contact}/restore')->name('contacts.restore')->uses('Contac
 
 
 // Equipment
+Route::get('user/equipment')->name('user.equipment')->uses('EquipmentController@userEquipment')->middleware('remember', 'auth');
 Route::get('equipment')->name('equipment')->uses('EquipmentController@index')->middleware('remember', 'auth');
 Route::get('equipment/create')->name('equipment.create')->uses('EquipmentController@create')->middleware('auth');
 Route::post('equipment')->name('equipment.store')->uses('EquipmentController@store')->middleware('auth');

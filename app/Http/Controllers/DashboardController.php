@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\loanedequipment;
 
+use App\Equipment;
 use Inertia\Inertia;
 
 class DashboardController extends Controller

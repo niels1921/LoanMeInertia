@@ -17,6 +17,9 @@
                     <text-input v-model="form.city" :errors="$page.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" label="City" />
                     <text-input v-model="form.country" :errors="$page.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" label="Country" />
                 </div>
+                <label>Files
+                    <input type="file" id="files" ref="files" multiple v-on:change="handleFileUploads()"/>
+                </label>
                 <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex justify-end items-center">
                     <loading-button :loading="sending" class="btn-indigo button-green" type="submit">Create Equipment</loading-button>
                 </div>
@@ -30,6 +33,7 @@
     import LoadingButton from '@/Shared/LoadingButton'
     import SelectInput from '@/Shared/SelectInput'
     import TextInput from '@/Shared/TextInput'
+    import FileInput from '@/Shared/FileInput'
     import TextareaInput from '../../Shared/TextareaInput'
 
     export default {
@@ -40,6 +44,7 @@
             LoadingButton,
             SelectInput,
             TextInput,
+            FileInput,
         },
       props: {
         categories: null,
@@ -56,14 +61,35 @@
                     address: null,
                     city: null,
                     country: null,
+                    files: null,
                 },
             }
         },
         methods: {
+            handleFileUploads(){
+                this.files = this.$refs.files.files;
+            },
             submit() {
+                var data = new FormData()
+                data.append('name', this.form.name || '')
+                data.append('description', this.form.description || '')
+                data.append('category_id', this.form.category_id || '')
+                data.append('postal_code', this.form.postal_code || '')
+                data.append('address', this.form.address || '')
+                data.append('city', this.form.city || '')
+                data.append('country', this.form.country || '')
+                for( var i = 0; i < this.files.length; i++ ){
+                    let file = this.files[i];
+                    data.append('files[' + i + ']', file);
+                }
+
                 this.sending = true
-                this.$inertia.post(this.route('equipment.store'), this.form)
+                this.$inertia.post(this.route('equipment.store'), data)
                     .then(() => this.sending = false)
+
+                //
+                // this.$inertia.post(this.route('equipment.store'), this.form)
+                //     .then(() => this.sending = false)
             },
 
         },

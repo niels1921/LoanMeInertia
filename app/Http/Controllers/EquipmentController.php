@@ -23,6 +23,16 @@ class EquipmentController extends Controller
     ]);
     }
 
+    public function userEquipment(){
+        return Inertia::render('Equipment/Index', [
+            'filters' => \Illuminate\Support\Facades\Request::all('search', 'trashed'),
+            'equipment' => Equipment::query()
+                ->orderBy('name')
+                ->paginate()
+                ->only('id', 'name', 'address', 'postal_code', 'city','country'),
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('Equipment/Create',[
@@ -31,7 +41,11 @@ class EquipmentController extends Controller
 
     public function store()
     {
-        Auth::user()->account->equipment()->create(
+//        $files = Request::all()['files'];
+//
+//        dd($files);
+
+        $equipment = Auth::user()->account->equipment()->create(
             Request::validate([
                 'name' => ['required', 'max:100'],
                 'description' => [],
@@ -43,11 +57,20 @@ class EquipmentController extends Controller
             ])
         );
 
+        if(Request::has('files')){
+            $files = Request::all()['files'];
+            foreach ($files as $file){
+                $equipment->addMedia($file);
+            }
+        }
+
+
         return Redirect::route('equipment')->with('success', 'Equipment created.');
     }
 
     public function edit(Equipment $equipment)
     {
+        dd($equipment->getMedia());
         return Inertia::render('Equipment/Edit', [
             'categories' => Category::all()->toArray(),
             'equipment' => [
