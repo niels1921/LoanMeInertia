@@ -17,11 +17,11 @@
                     <text-input v-model="form.city" :errors="$page.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" label="City" />
                     <text-input v-model="form.country" :errors="$page.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" label="Country" />
                 </div>
-                <label>Files
+                <label>
                     <input type="file" id="files" ref="files" multiple v-on:change="handleFileUploads()"/>
                 </label>
                 <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex justify-end items-center">
-                    <loading-button :loading="sending" class="btn-indigo" type="submit">Create Organization</loading-button>
+                    <loading-button :loading="sending" class="btn-indigo button-green" type="submit">Create Equipment</loading-button>
                 </div>
             </form>
         </div>
@@ -46,6 +46,9 @@
             TextInput,
             FileInput,
         },
+      props: {
+        categories: null,
+      },
         remember: 'form',
         data() {
             return {
@@ -90,8 +93,6 @@
             },
 
         },
-      props: {
-          categories: [],
-      }
+
     }
 </script>

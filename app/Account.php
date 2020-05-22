@@ -21,6 +21,10 @@ class Account extends Model
         return $this->hasMany(Equipment::class);
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(loanedequipment::class);
+    }
     public function contacts()
     {
         return $this->hasMany(Contact::class);

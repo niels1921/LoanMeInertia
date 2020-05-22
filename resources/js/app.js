@@ -4,6 +4,7 @@ import PortalVue from 'portal-vue'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import VueMapbox from "vue-mapbox";
 import Mapbox from "mapbox-gl";
+import VModal from 'vue-js-modal'
 
 
 Vue.config.productionTip = false
@@ -12,6 +13,7 @@ Vue.use(InertiaApp)
 Vue.use(PortalVue)
 Vue.use(VueMeta)
 Vue.use(VueMapbox, { mapboxgl: Mapbox });
+Vue.use(VModal)
 
 let app = document.getElementById('app')
 

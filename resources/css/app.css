@@ -11,3 +11,41 @@
 
 /* Utilities */
 @import "tailwindcss/utilities";
+
+.title-login{
+    font-size: 30px;
+    text-align: center;
+}
+
+.login-page{
+    background-color: #52aa8ad6;
+}
+
+.button-green{
+    background-color: #136F63;
+}
+
+.light-green{
+    background-color: #52aa8ad6;
+}
+
+.main-menu-color{
+    color: #136F63;
+}
+
+.logo{
+    color: white;
+    font-size: 20px;
+}
+
+.card{
+    display: inline-block;
+    margin-right: 10px;
+    width:340px;
+    height: 400px;
+    margin-bottom: 10px;
+}
+
+.reservation-button{
+    display:inline-block;
+}
