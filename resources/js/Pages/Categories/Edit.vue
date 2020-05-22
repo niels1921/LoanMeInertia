@@ -15,7 +15,7 @@
         </div>
         <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex items-center">
           <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete category</button>
-          <loading-button :loading="sending" class="btn-indigo ml-auto" type="submit">Update category</loading-button>
+          <loading-button :loading="sending" class="btn-indigo button-green ml-auto" type="submit">Update category</loading-button>
         </div>
       </form>
     </div>
