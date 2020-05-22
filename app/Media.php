@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class Media extends Model
 {
@@ -13,4 +15,9 @@ class Media extends Model
         'model_id',
         'ext'
     ];
+
+    public function getUrl(){
+        $url = Storage::url($this->path);
+        return URL::to('/').$url;
+    }
 }

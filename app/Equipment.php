@@ -27,7 +27,7 @@ class Equipment extends Model
 
     function getJson(){
         $item = $this->toArray();
-        $item['image'] =  URL::to('/').$this->getMedia('gallery')[0]->getUrl();
+        $item['image'] =  $this->getFeatured();
         return $item;
     }
 
@@ -48,6 +48,13 @@ class Equipment extends Model
     }
 
     public function getMedia(){
-        return Media::where([['model_type',Equipment::class],['model_id',$this->id]])->get();
+        return Media::where([['model_type',Equipment::class],['model_id',$this->id]]);
+    }
+
+    public function getFeatured(){
+        if ($this->getMedia()->first()){
+            return $this->getMedia()->first()->getUrl();
+        }
+        return null;
     }
 }

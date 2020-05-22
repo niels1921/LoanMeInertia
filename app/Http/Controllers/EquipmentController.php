@@ -70,7 +70,7 @@ class EquipmentController extends Controller
 
     public function edit(Equipment $equipment)
     {
-        dd($equipment->getMedia());
+        dd($equipment->getJson());
         return Inertia::render('Equipment/Edit', [
             'categories' => Category::all()->toArray(),
             'equipment' => [

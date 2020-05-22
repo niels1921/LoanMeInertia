@@ -25,3 +25,5 @@ Homestead.json
 .rocketeer/
 *.json
 !.eslintrc.json
+
+public/js/
