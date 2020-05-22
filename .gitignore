@@ -1,3 +1,4 @@
+
 vendor/
 node_modules/
 npm-debug.log
@@ -26,4 +27,10 @@ Homestead.json
 *.json
 !.eslintrc.json
 
-public/js/
+public/mix-manifest.json
+
+public/js
+
+public/css
+public/images
+public/uploads
