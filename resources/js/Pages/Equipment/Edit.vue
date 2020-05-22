@@ -20,10 +20,13 @@
                     <text-input v-model="form.postal_code" :errors="$page.errors.postal_code" class="pr-6 pb-8 w-full lg:w-1/2" label="Postal code" />
                     <text-input v-model="form.city" :errors="$page.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" label="City" />
                     <text-input v-model="form.country" :errors="$page.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" label="Country" />
+                    <label>Files
+                        <input type="file" id="files" ref="files" multiple v-on:change="handleFileUploads()"/>
+                    </label>
                 </div>
                 <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex items-center">
                     <button v-if="!equipment.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete equipment</button>
-                    <loading-button :loading="sending" class="btn-indigo ml-auto" type="submit">Update equipment</loading-button>
+                    <loading-button :loading="sending" class="btn-indigo button-green ml-auto" type="submit">Update equipment</loading-button>
                 </div>
             </form>
         </div>
@@ -68,6 +71,7 @@
                     city: this.equipment.city,
                     country: this.equipment.country,
                     postal_code: this.equipment.postal_code,
+                    files: this.equipment.files,
                 },
             }
         },

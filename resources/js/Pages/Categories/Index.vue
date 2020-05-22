@@ -4,7 +4,7 @@
     <div class="mb-6 flex justify-between items-center">
       <search-filter v-model="form.search" class="w-full max-w-md mr-4" @reset="reset">
       </search-filter>
-      <inertia-link class="btn-indigo" :href="route('categories.create')">
+      <inertia-link class="btn-indigo button-green" :href="route('categories.create')">
         <span>Create</span>
         <span class="hidden md:inline">Category</span>
       </inertia-link>

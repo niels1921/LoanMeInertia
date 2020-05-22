@@ -32,3 +32,20 @@
 .main-menu-color{
     color: #136F63;
 }
+
+.logo{
+    color: white;
+    font-size: 20px;
+}
+
+.card{
+    display: inline-block;
+    margin-right: 10px;
+    width:340px;
+    height: 400px;
+    margin-bottom: 10px;
+}
+
+.reservation-button{
+    display:inline-block;
+}

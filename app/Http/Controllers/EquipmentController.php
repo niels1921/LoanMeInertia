@@ -48,7 +48,7 @@ class EquipmentController extends Controller
         $equipment = Auth::user()->account->equipment()->create(
             Request::validate([
                 'name' => ['required', 'max:100'],
-                'description' => [],
+                'description' => ['max:150'],
                 'category_id' => ['required'],
                 'address' => ['required', 'max:150'],
                 'postal_code' => ['required', 'max:25'],
@@ -70,7 +70,7 @@ class EquipmentController extends Controller
 
     public function edit(Equipment $equipment)
     {
-        dd($equipment->getMedia());
+        //dd($equipment->getMedia());
         return Inertia::render('Equipment/Edit', [
             'categories' => Category::all()->toArray(),
             'equipment' => [
@@ -82,6 +82,7 @@ class EquipmentController extends Controller
                 'postal_code' => $equipment->postal_code,
                 'city' => $equipment->city,
                 'country' => $equipment->country,
+                'files' =>$equipment->files,
             ],
         ]);
     }

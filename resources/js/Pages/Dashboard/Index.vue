@@ -1,8 +1,8 @@
 <template>
   <div>
     <modal name="reservation" />
-    <button @click="show">Open modal</button>
-    <h1 class="mb-8 font-bold text-3xl">Equipment</h1>
+    <!--<button @click="show">Open modal</button>-->
+    <h1 class="mb-8 font-bold text-3xl">Available equipment</h1>
     <div class="mb-6 flex justify-between items-center">
       <search-filter v-model="form.search" class="w-full max-w-md mr-4" @reset="reset">
         <label class="block text-gray-700">Trashed:</label>
@@ -13,49 +13,24 @@
         </select>
       </search-filter>
     </div>
-    <div class="bg-white rounded shadow overflow-x-auto">
-      <table class="w-full whitespace-no-wrap">
-        <tr class="text-left font-bold">
-          <th class="px-6 pt-6 pb-4">Name</th>
-          <th class="px-6 pt-6 pb-4">City</th>
-          <th class="px-6 pt-6 pb-4" colspan="2">Postal code</th>
-        </tr>
-        <tr v-for="eq in equipment.data" :key="eq.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
-          <td class="border-t">
-            <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="route('equipment.edit', eq.id)">
-              {{ eq.name }}
-            </inertia-link>
-          </td>
-          <td class="border-t">
-            <inertia-link class="px-6 py-4 flex items-center" :href="route('equipment.edit', eq.id)" tabindex="-1">
-              {{ eq.city }}
-            </inertia-link>
-          </td>
-          <td class="border-t">
-            <inertia-link class="px-6 py-4 flex items-center" :href="route('equipment.edit', eq.id)" tabindex="-1">
-              {{ eq.postal_code }}
-            </inertia-link>
-          </td>
-          <td class="border-t">
-            <inertia-link class="btn-indigo button-green" :href="route('reservation.create')">
-              <span>Make</span>
-              <span class="hidden md:inline">reservation</span>
-            </inertia-link>
-          </td>
-          <td class="border-t w-px">
-            <inertia-link class="px-4 flex items-center" :href="route('equipment.edit', eq.id)" tabindex="-1">
-              <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
-            </inertia-link>
-          </td>
-        </tr>
-        <tr v-if="equipment.data.length === 0">
-          <td class="border-t px-6 py-4" colspan="4">No equipment found.</td>
-        </tr>
-      </table>
-    </div>
+    <div  v-for="eq in equipment.data" :key="eq.id" class="max-w-sm rounded overflow-hidden shadow-lg card">
+      <img class="w-full" src="https://checkyeti.imgix.net/images/optimized/private-snowboarding-lessons-for-kids-and-adults-all-levels-scuola-di-sci-e-snowboard-alpe-cimbra1.jpg">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">{{eq.name}}</div>
+        <p class="text-gray-700 text-base">{{eq.description}}</p>
+      </div>
+      <div class="px-6 py-4 reservation-button">
+        <p class="text-gray-900 leading-none">{{eq.city}}</p>
+        <p class="text-gray-600">{{eq.postal_code}}</p>
+      </div>
+      <inertia-link class="btn-indigo button-green " :href="route('reservation.create')">
+        <span>Make</span>
+        <span class="hidden md:inline">Reservation</span>
+      </inertia-link>
+      </div>
     <pagination :links="equipment .links" />
-  </div>
-  </model>
+    </div>
+
 </template>
 
 <script>
@@ -78,6 +53,7 @@ export default {
   props: {
     equipment: Object,
     filters: Object,
+    media: Object,
   },
   data() {
     return {
