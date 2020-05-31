@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
                 $contact->update(['organization_id' => $organizations->random()->id]);
             });
 
-        $this->call([
-            EquipmentSeeder::class,
-        ]);
+//        $this->call([
+//            EquipmentSeeder::class,
+//        ]);
     }
 }

@@ -20,6 +20,10 @@ class Equipment extends Model
         'category_id',
     ];
 
+    public function media(){
+        return $this->hasMany('App\Media', 'model_id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -35,9 +39,11 @@ class Equipment extends Model
         if($file->isValid()){
             $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $path = Storage::putFile(
-                'uploads/'.$this->id, $file
+                'public/uploads/'.$this->id, $file
             );
+            $url =  URL::to('/').Storage::url($path);
             Media::create([
+                'url' => $url,
                 'path' => $path,
                 'name' => $title,
                 'ext' => Str::slug($file->getClientOriginalExtension(),'-'),

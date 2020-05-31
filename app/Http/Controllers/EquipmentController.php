@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Equipment;
 use App\Organization;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +27,13 @@ class EquipmentController extends Controller
     public function create()
     {
         return Inertia::render('Equipment/Create',[
-           // 'categories' => Category::all()->toArray()
-        ]);    }
+            'categories' => Category::all()->toArray()
+        ]);
+    }
 
     public function store()
     {
-        Auth::user()->account->equipment()->create(
+       $equipment = Auth::user()->account->equipment()->create(
             Request::validate([
                 'name' => ['required', 'max:100'],
                 'description' => ['max:150'],
@@ -43,12 +45,19 @@ class EquipmentController extends Controller
             ])
         );
 
+        if(Request::has('files')){
+            $files = Request::all()['files'];
+            foreach ($files as $file){
+                $equipment->addMedia($file);
+            }
+        }
+
         return Redirect::route('equipment')->with('success', 'Equipment created.');
     }
 
     public function edit(Equipment $equipment)
     {
-        dd($equipment->getJson());
+        dd($equipment->media);
         return Inertia::render('Equipment/Edit', [
             'equipment' => [
                 'id' => $equipment->id,

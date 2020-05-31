@@ -16,10 +16,10 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Index', [
             'filters' => \Illuminate\Support\Facades\Request::all('search', 'trashed'),
             'equipment' => Equipment::query()
+                ->with('media')
                 ->orderBy('created_at', 'desc')
                 ->paginate(6)
-                ->only('id', 'name','description', 'address', 'postal_code', 'city', 'country'),
-             'media' => Media::query(),
+                ->only('id', 'name','description', 'address', 'postal_code', 'city', 'country','media'),
         ]);
 
     }
