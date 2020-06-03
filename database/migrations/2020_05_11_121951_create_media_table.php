@@ -17,6 +17,7 @@ class CreateMediaTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('path');
+            $table->string('url');
             $table->string('ext');
             $table->string('model_type');
             $table->bigInteger('model_id');
