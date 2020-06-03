@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->roleSeeder();
+        $this->categorySeeder();
 
         $account = Account::create(['name' => 'Centria']);
 
@@ -27,6 +28,13 @@ class DatabaseSeeder extends Seeder
 
         $user->assignRole('owner');
         factory(User::class, 5)->create(['account_id' => $account->id]);
+    }
+
+    public function categorySeeder(){
+        $categories = ['outdoor','indoor'];
+        foreach ($categories as $category){
+            \App\Category::create(['name' => $category]);
+        }
     }
 
     public function roleSeeder(){
