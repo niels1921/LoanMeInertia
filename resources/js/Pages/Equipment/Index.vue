@@ -20,7 +20,7 @@
                 <tr class="text-left font-bold">
                     <th class="px-6 pt-6 pb-4">Name</th>
                     <th class="px-6 pt-6 pb-4">City</th>
-                    <th class="px-6 pt-6 pb-4" colspan="2">Postal code</th>
+                    <th class="px-6 pt-6 pb-4 priority-low" colspan="2">Postal code</th>
                 </tr>
                 <tr v-for="eq in equipment.data" :key="eq.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
                     <td class="border-t">
@@ -33,7 +33,7 @@
                             {{ eq.city }}
                         </inertia-link>
                     </td>
-                    <td class="border-t">
+                    <td class="border-t priority-low">
                         <inertia-link class="px-6 py-4 flex items-center" :href="route('equipment.edit', eq.id)" tabindex="-1">
                             {{ eq.postal_code }}
                         </inertia-link>

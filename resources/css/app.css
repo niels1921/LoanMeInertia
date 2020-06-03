@@ -38,14 +38,56 @@
     font-size: 20px;
 }
 
-.card{
-    display: inline-block;
-    margin-right: 10px;
-    width:340px;
-    height: 400px;
-    margin-bottom: 10px;
+
+@media(min-width: 1024px) {
+    .card {
+        display: inline-block;
+        margin-right: 10px;
+        width: 340px;
+        height: 420px;
+        margin-bottom: 10px;
+    }
+    .menu-width{
+        width: 15rem !important;
+    }
+
+}
+@media(min-width: 380px)and (max-width:1024px){
+    .card {
+        margin-left: auto;
+        margin-right: auto;
+        width: 340px;
+        height: 400px;
+        margin-bottom: 10px;
+    }
+    .priority-low{
+        display:none;
+    }
+    .menu-width{
+        width: 15rem !important;
+    }
+}
+
+@media(max-width: 380px){
+    .card {
+        margin-left: auto;
+        margin-right: auto;
+        width: 280px;
+        height: 400px;
+        margin-bottom: 10px;
+    }
+    .priority-low{
+        display:none;
+    }
+
 }
 
 .reservation-button{
     display:inline-block;
 }
+
+.px-8{
+    background-color: #52aa8a;
+}
+
+
