@@ -22,7 +22,7 @@ let app = document.getElementById('app')
 
 new Vue({
   metaInfo: {
-    titleTemplate: (title) => title ? `${title} - Ping CRM` : 'Ping CRM'
+    titleTemplate: (title) => title ? `${title} - LoanMe` : 'LoanMe'
   },
   render: h => h(InertiaApp, {
     props: {
