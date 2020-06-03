@@ -14,7 +14,7 @@
 // Auth
 Route::get('login')->name('login')->uses('Auth\LoginController@showLoginForm')->middleware('guest');
 Route::get('register')->name('register')->uses('Auth\LoginController@showRegisterform')->middleware('guest');
-Route::post('register')->name('register.attempt')->uses('Auth\UserController@showRegisterform')->middleware('guest');
+Route::post('register')->name('register.attempt')->uses('Auth\RegisterController@register')->middleware('guest');
 Route::post('login')->name('login.attempt')->uses('Auth\LoginController@login')->middleware('guest');
 Route::post('logout')->name('logout')->uses('Auth\LoginController@logout');
 
@@ -76,8 +76,6 @@ Route::get('reservations/dates/{id}')->name('reservations.dates')->uses('Reserva
 
 
 
-// Reports
-Route::get('reports')->name('reports')->uses('ReportsController')->middleware('auth');
 
 // 500 error
 Route::get('500', function () {

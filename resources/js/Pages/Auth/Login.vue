@@ -14,7 +14,8 @@
           </label>
         </div>
         <div class="px-10 py-4 bg-gray-100 border-t border-gray-200 flex justify-between items-center">
-          <a class="hover:underline" tabindex="-1" href="#reset-password">Forget password?</a>
+            <inertia-link class="hover:underline" tabindex="-1" :href="this.route('register')">Register</inertia-link>
+            <a class="hover:underline" tabindex="-1" href="#reset-password">Forget password?</a>
           <loading-button :loading="sending" class="button-green btn-indigo" type="submit">Login</loading-button>
         </div>
       </form>
@@ -41,8 +42,8 @@ export default {
     return {
       sending: false,
       form: {
-        email: 'johndoe@example.com',
-        password: 'secret',
+        email: '',
+        password: '',
         remember: null,
       },
     }

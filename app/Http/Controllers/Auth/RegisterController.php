@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Account;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Mockery\Exception;
 
 class RegisterController extends Controller
 {
@@ -51,7 +55,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
     }
 
@@ -64,9 +68,31 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
             'email' => $data['email'],
+            'account_id' => $data['account_id'],
+            'name' => $data['name'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        if($request->get('password') == $request->get('passwordRepeat')){
+            $data = $request->all();
+            $account = Account::create(['name' => $request->get('name')]);
+            $data['account_id'] = $account->id;
+            $validator = $this->validator($data);
+            if($validator->fails()){
+                return Redirect::back()->with('error', 'Something went wrong.');
+            }
+            try {
+                $user = $this->create($data);
+                $user->assignRole('owner');
+                return Redirect::route('login')->with('success', 'Registered.');
+
+            } catch (Exception $e){}
+
+        }
+        return Redirect::back()->with('error', 'Something went wrong.');
     }
 }

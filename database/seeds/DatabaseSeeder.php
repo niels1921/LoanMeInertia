@@ -15,20 +15,17 @@ class DatabaseSeeder extends Seeder
     {
         $this->roleSeeder();
 
-        $account = Account::create(['name' => 'Acme Corporation']);
+        $account = Account::create(['name' => 'Centria']);
 
         $user = User::create([
             'account_id' => $account->id,
-            'first_name' => 'John',
-            'last_name' => 'Doe',
+            'name' => 'John Doe',
             'email' => 'johndoe@example.com',
             'password' => 'secret',
             'owner' => true,
         ]);
 
         $user->assignRole('owner');
-
-
         factory(User::class, 5)->create(['account_id' => $account->id]);
     }
 
