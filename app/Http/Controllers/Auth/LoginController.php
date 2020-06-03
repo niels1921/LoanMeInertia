@@ -37,4 +37,9 @@ class LoginController extends Controller
     {
         return Inertia::render('Auth/Login');
     }
+
+    public function showRegisterForm()
+    {
+        return Inertia::render('Auth/Register');
+    }
 }

@@ -13,6 +13,8 @@
 
 // Auth
 Route::get('login')->name('login')->uses('Auth\LoginController@showLoginForm')->middleware('guest');
+Route::get('register')->name('register')->uses('Auth\LoginController@showRegisterform')->middleware('guest');
+Route::post('register')->name('register.attempt')->uses('Auth\UserController@showRegisterform')->middleware('guest');
 Route::post('login')->name('login.attempt')->uses('Auth\LoginController@login')->middleware('guest');
 Route::post('logout')->name('logout')->uses('Auth\LoginController@logout');
 
@@ -36,47 +38,35 @@ Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
-// Organizations
-//Route::get('organizations')->name('organizations')->uses('OrganizationsController@index')->middleware('remember', 'auth');
-//Route::get('organizations/create')->name('organizations.create')->uses('OrganizationsController@create')->middleware('auth');
-//Route::post('organizations')->name('organizations.store')->uses('OrganizationsController@store')->middleware('auth');
-//Route::get('organizations/{organization}/edit')->name('organizations.edit')->uses('OrganizationsController@edit')->middleware('auth');
-//Route::put('organizations/{organization}')->name('organizations.update')->uses('OrganizationsController@update')->middleware('auth');
-//Route::delete('organizations/{organization}')->name('organizations.destroy')->uses('OrganizationsController@destroy')->middleware('auth');
-//Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
-
-// Contacts
-//Route::get('contacts')->name('contacts')->uses('ContactsController@index')->middleware('remember', 'auth');
-//Route::get('contacts/create')->name('contacts.create')->uses('ContactsController@create')->middleware('auth');
-//Route::post('contacts')->name('contacts.store')->uses('ContactsController@store')->middleware('auth');
-//Route::get('contacts/{contact}/edit')->name('contacts.edit')->uses('ContactsController@edit')->middleware('auth');
-//Route::put('contacts/{contact}')->name('contacts.update')->uses('ContactsController@update')->middleware('auth');
-//Route::delete('contacts/{contact}')->name('contacts.destroy')->uses('ContactsController@destroy')->middleware('auth');
-//Route::put('contacts/{contact}/restore')->name('contacts.restore')->uses('ContactsController@restore')->middleware('auth');
-
-
 // Equipment
 Route::get('user/equipment')->name('user.equipment')->uses('EquipmentController@userEquipment')->middleware('remember', 'auth');
 Route::get('equipment')->name('equipment')->uses('EquipmentController@index')->middleware('remember', 'auth');
 Route::get('equipment/create')->name('equipment.create')->uses('EquipmentController@create')->middleware('auth');
 Route::post('equipment')->name('equipment.store')->uses('EquipmentController@store')->middleware('auth');
 Route::get('equipment/{equipment}/edit')->name('equipment.edit')->uses('EquipmentController@edit')->middleware('auth');
-Route::put('equipment/{equipment}')->name('equipment.update')->uses('EquipmentController@update')->middleware('auth');
+Route::post('equipment/update')->name('equipment.update')->uses('EquipmentController@update')->middleware('auth');
 Route::delete('equipment/{equipment}')->name('equipment.destroy')->uses('EquipmentController@destroy')->middleware('auth');
 //Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
 
 
 // Categories
-Route::get('categories')->name('categories')->uses('CategoryController@index')->middleware('remember', 'auth');
-Route::get('categories/create')->name('categories.create')->uses('CategoryController@create')->middleware('auth');
-Route::post('categories')->name('categories.store')->uses('CategoryController@store')->middleware('auth');
-Route::get('categories/{category}/edit')->name('categories.edit')->uses('CategoryController@edit')->middleware('auth');
-Route::put('categories/{category}')->name('categories.update')->uses('CategoryController@update')->middleware('auth');
-Route::delete('categories/{category}')->name('categories.destroy')->uses('CategoryController@destroy')->middleware('auth');
+Route::group(['middleware' => ['can:categories']], function () {
+    Route::get('categories')->name('categories')->uses('CategoryController@index')->middleware('remember', 'auth');
+    Route::get('categories/create')->name('categories.create')->uses('CategoryController@create')->middleware('auth');
+    Route::post('categories')->name('categories.store')->uses('CategoryController@store')->middleware('auth');
+    Route::get('categories/{category}/edit')->name('categories.edit')->uses('CategoryController@edit')->middleware('auth');
+    Route::put('categories/{category}')->name('categories.update')->uses('CategoryController@update')->middleware('auth');
+    Route::delete('categories/{category}')->name('categories.destroy')->uses('CategoryController@destroy')->middleware('auth');
+});
+
 
 // Reservations
 // Equipment
 Route::get('reservations')->name('reservations')->uses('ReservationController@index')->middleware('remember', 'auth');
+Route::get('reservations/create/{equipment}')->name('reservations.create')->uses('ReservationController@create')->middleware('remember', 'auth');
+Route::post('reservations/store')->name('reservations.store')->uses('ReservationController@store')->middleware('remember', 'auth');
+Route::post('reservations/cancel')->name('reservations.cancel')->uses('ReservationController@destroy')->middleware('remember', 'auth');
+Route::get('reservations/dates/{id}')->name('reservations.dates')->uses('ReservationController@getDates')->middleware('remember', 'auth');
 //Route::get('equipment/create')->name('equipment.create')->uses('EquipmentController@create')->middleware('auth');
 //Route::post('equipment')->name('equipment.store')->uses('EquipmentController@store')->middleware('auth');
 //Route::get('equipment/{equipment}/edit')->name('equipment.edit')->uses('EquipmentController@edit')->middleware('auth');

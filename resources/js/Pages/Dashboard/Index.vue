@@ -21,10 +21,10 @@
         <p class="text-gray-900 leading-none">{{ eq.city }}</p>
         <p class="text-gray-600">{{ eq.postal_code }}</p>
       </div>
-      <inertia-link class="btn-indigo button-green " :href="route('reservation.create')">
-        <span>Make</span>
-        <span class="hidden md:inline">Reservation</span>
-      </inertia-link>
+        <inertia-link class="btn-indigo button-green " :href="route('reservations.create', eq.id)" tabindex="-1">
+            <span>Make</span>
+            <span class="hidden md:inline">Reservation</span>
+        </inertia-link>
     </div>
     <pagination :links="equipment .links" />
   </div>
@@ -38,6 +38,7 @@ import Pagination from '@/Shared/Pagination'
 import pickBy from 'lodash/pickBy'
 import SearchFilter from '@/Shared/SearchFilter'
 import throttle from 'lodash/throttle'
+import axios from 'axios'
 
 export default {
   metaInfo: { title: 'equipment' },
@@ -70,7 +71,7 @@ export default {
     },
   },
   methods: {
-    getImage (eq) {
+    getImage(eq) {
       if (typeof eq.media !== 'undefined' && eq.media.length > 0) {
         return eq.media[0].url
       }

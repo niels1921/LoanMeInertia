@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
@@ -21,12 +22,17 @@ class Equipment extends Model
     ];
 
     public function media(){
-        return $this->hasMany('App\Media', 'model_id');
+        return $this->hasMany('App\Media', 'model_id')->orderBy('priority');
     }
 
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class,'equipment_id');
     }
 
     function getJson(){
@@ -35,7 +41,7 @@ class Equipment extends Model
         return $item;
     }
 
-    public function addMedia($file){
+    public function addMedia($file, $priority = 1000){
         if($file->isValid()){
             $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $path = Storage::putFile(
@@ -46,10 +52,19 @@ class Equipment extends Model
                 'url' => $url,
                 'path' => $path,
                 'name' => $title,
+                'priority' => $priority,
+                'size' => $file->getSize(),
                 'ext' => Str::slug($file->getClientOriginalExtension(),'-'),
                 'model_type' => Equipment::class,
                 'model_id' => $this->id,
             ]);
+        }
+    }
+
+    public function updateMedia($file, $priority){
+        $item = $this->media()->find($file->id);
+        if(!is_null($item)){
+            $item->update(['priority' => $priority]);
         }
     }
 
@@ -62,5 +77,22 @@ class Equipment extends Model
             return $this->getMedia()->first()->getUrl();
         }
         return null;
+    }
+
+    public function getDisabledDates(){
+        return $this->reservations()->whereDate('from', '>=', Carbon::now())->get()->map(function ($reservation) {
+            return [
+                'start' => [
+                    'day' => $reservation->from->format('d'),
+                    'month' => $reservation->from->modify('-1 months')->format('m'),
+                    'year' => $reservation->from->format('Y'),
+                ],
+                'end' => [
+                    'day' => $reservation->till->format('d'),
+                    'month' => $reservation->till->modify('-1 months')->format('m'),
+                    'year' => $reservation->till->format('Y'),
+                ],
+            ];
+        });
     }
 }

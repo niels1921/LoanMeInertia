@@ -7,6 +7,10 @@ module.exports = {
         sans: ['Cerebri Sans', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        main: {
+          'bold': '#52aa8ad6',
+          'light': '#52aa8aa6',
+        },
         indigo: {
           '900': '#191e38',
           '800': '#2f365f',
