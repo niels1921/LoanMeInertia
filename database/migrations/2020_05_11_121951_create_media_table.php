@@ -19,6 +19,8 @@ class CreateMediaTable extends Migration
             $table->string('path');
             $table->string('url');
             $table->string('ext');
+            $table->integer('size')->nullable();
+            $table->integer('priority')->nullable();
             $table->string('model_type');
             $table->bigInteger('model_id');
             $table->timestamps();

@@ -23,7 +23,7 @@ class Account extends Model
 
     public function reservations()
     {
-        return $this->hasMany(loanedequipment::class);
+        return $this->hasMany(Reservation::class,'user_id');
     }
     public function contacts()
     {

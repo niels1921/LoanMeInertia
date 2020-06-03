@@ -17,6 +17,7 @@ class DashboardController extends Controller
             'filters' => \Illuminate\Support\Facades\Request::all('search', 'trashed'),
             'equipment' => Equipment::query()
                 ->with('media')
+                ->with('reservations')
                 ->orderBy('created_at', 'desc')
                 ->paginate(6)
                 ->only('id', 'name','description', 'address', 'postal_code', 'city', 'country','media'),

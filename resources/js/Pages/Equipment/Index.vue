@@ -45,7 +45,7 @@
                     </td>
                 </tr>
                 <tr v-if="equipment.data.length === 0">
-                    <td class="border-t px-6 py-4" colspan="4">No organizations found.</td>
+                    <td class="border-t px-6 py-4" colspan="4">No equipment found.</td>
                 </tr>
             </table>
         </div>

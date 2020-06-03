@@ -14,6 +14,8 @@ class Media extends Model
         'url',
         'model_type',
         'model_id',
+        'size',
+        'priority',
         'ext'
     ];
 

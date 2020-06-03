@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Equipment;
+use App\Media;
 use App\Organization;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -47,45 +49,71 @@ class EquipmentController extends Controller
 
         if(Request::has('files')){
             $files = Request::all()['files'];
-            foreach ($files as $file){
-                $equipment->addMedia($file);
+            foreach ($files as $key => $file){
+                $equipment->addMedia($file,$key);
             }
         }
-
         return Redirect::route('equipment')->with('success', 'Equipment created.');
     }
 
     public function edit(Equipment $equipment)
     {
-        dd($equipment->media);
         return Inertia::render('Equipment/Edit', [
             'equipment' => [
                 'id' => $equipment->id,
                 'name' => $equipment->name,
-                'category' => $equipment->phone,
+                'category_id' => $equipment->category_id,
                 'address' => $equipment->address,
                 'postal_code' => $equipment->postal_code,
                 'city' => $equipment->city,
                 'country' => $equipment->country,
-                'files' =>$equipment->files,
+                'files' => $equipment->media()->orderBy('priority')->get(),
             ],
+            'categories' => Category::all()->toArray(),
+            'reservations' => $equipment->reservations()->whereDate('from', '>=', Carbon::now())->with('equipment')
+                ->paginate()->map(function ($reservation) {
+                    return [
+                        'id' => $reservation->id,
+                        'name'=> $reservation->user->name,
+                        'equipment_id' => $reservation->equipment->id,
+                        'from' => $reservation->from->format('Y-m-d'),
+                        'till' => $reservation->till->format('Y-m-d'),
+                    ];
+                })
         ]);
     }
 
-    public function update(Organization $organization)
+    public function update()
     {
-        $organization->update(
+        $equipment = Equipment::find(Request::get('id'));
+        $equipment->update(
             Request::validate([
                 'name' => ['required', 'max:100'],
-                'description' => [],
-                'category' => ['required'],
+                'description' => ['max:150'],
+                'category_id' => ['required'],
                 'address' => ['required', 'max:150'],
                 'postal_code' => ['required', 'max:25'],
                 'city' => ['required', 'max:50'],
                 'country' => ['required', 'max:60'],
             ])
         );
-
+        if(Request::has('files')){
+            $files = Request::all()['files'];
+            foreach ($files as $key => $file){
+                if(gettype($file) == "string"){
+                    $file = json_decode($file);
+                    $equipment->updateMedia($file,$key);
+                } else {
+                    $equipment->addMedia($file,$key);
+                }
+            }
+        }
+        if(Request::has('removedMedia')) {
+            if(gettype(Request::get('removedMedia')) == "string"){
+                $removedMedia = json_decode(Request::get('removedMedia'));
+                Media::destroy($removedMedia);
+            }
+        }
         return Redirect::back()->with('success', 'Equipment updated.');
     }
 
@@ -99,7 +127,6 @@ class EquipmentController extends Controller
     public function restore(Organization $organization)
     {
         $organization->restore();
-
         return Redirect::back()->with('success', 'Organization restored.');
     }
 }
